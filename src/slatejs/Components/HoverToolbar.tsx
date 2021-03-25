@@ -62,13 +62,13 @@ function HoverToolbar() {
       `}
     >
       <CustomizedDividers />
-      {/* <ButtonGroup>
+      <ButtonGroup>
         {BlockButton('heading-one', 'h1')}
         {BlockButton('heading-two', 'h2')}
         {BlockButton('block-quote', <ChatIcon />)}
         {BlockButton('numbered-list', <FormatListNumberedIcon />)}
         {BlockButton('bulleted-list', <ListIcon />)}
-      </ButtonGroup> */}
+      </ButtonGroup>
     </Paper>
   )
 }

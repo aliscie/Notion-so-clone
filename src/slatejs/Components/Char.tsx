@@ -1,3 +1,4 @@
+import { callbackify } from 'node:util'
 import React from 'react'
 
 function Char(char: any, i: number, index: number) {
@@ -18,7 +19,7 @@ function Char(char: any, i: number, index: number) {
       style={{
         padding: '1px 3px',
         borderRadius: '3px',
-        background: i === index ? '#B4D5FF' : 'transparent',
+        background: i === index ? 'lightblue' : 'transparent',
       }}
     >
       {char}
