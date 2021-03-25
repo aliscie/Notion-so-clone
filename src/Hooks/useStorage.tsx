@@ -7,9 +7,13 @@ function useStorage() {
     },
   }
   const PROFILEOBJ: string = '' //localStorage.getItem('PROFILEOBJ') || ''
-  var get: any = PROFILEOBJ.length > 1 && {
-    PROFILEOBJ: JSON.parse(PROFILEOBJ),
-  }
+  var get: any =
+    PROFILEOBJ === null
+      ? {}
+      : {
+          PROFILEOBJ: JSON.parse(PROFILEOBJ),
+        }
+  // console.log(get)
   return [get, set]
 }
 

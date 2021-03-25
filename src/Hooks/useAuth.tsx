@@ -28,12 +28,14 @@ type LoginResponse = {
 
 function useAuth() {
   const [accessToken, setAccessToken] = React.useState<string>('')
+  console.log('authentication function successfully activated')
   const [login] = useMutation(UPDATE_TODO, {
     variables: {
       accessToken: accessToken,
     },
 
     onCompleted: (res: LoginResponse) => {
+      console.log('res function successfully return')
       localStorage.setItem('AUTH_TOKEN', res.socialAuth.token)
       window.location.reload()
     },
@@ -41,10 +43,11 @@ function useAuth() {
 
   function logIn(response: any) {
     const accessToken: string = response.accessToken
-    const profileObj: string = JSON.stringify(response.profileObj)
+    const profileObj: any = response.profileObj
     setAccessToken(accessToken)
     login()
-    localStorage.setItem('AUTH_PROFILE_OJB', profileObj)
+    localStorage.setItem('image', profileObj.imageUrl)
+    localStorage.setItem('username', profileObj.givenName)
   }
 
   function logOut() {
@@ -52,17 +55,8 @@ function useAuth() {
     localStorage.clear()
     window.location.reload()
   }
-  const AUTH_PROFILE_OJB: string | null = localStorage.getItem(
-    'AUTH_PROFILE_OJB',
-  )
-  const profile = AUTH_PROFILE_OJB
-    ? JSON.parse(AUTH_PROFILE_OJB)
-    : {
-        givenName: null,
-        imageUrl: null,
-      }
 
-  return [logOut, logIn, profile]
+  return [logOut, logIn]
 }
 
 export default useAuth

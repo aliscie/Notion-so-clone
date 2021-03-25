@@ -19,12 +19,11 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { AvatarGroup } from '@material-ui/lab'
 import { Avatar } from '@material-ui/core'
-import GoogleAuth from '../components/GoogleAuth'
-import useStorage from '../Hooks/useStorage'
+import GoogleAuth from '../Components/GoogleAuth'
 import useAuth from '../Hooks/useAuth'
 
 export default function PrimarySearchAppBar() {
-  const [logOut, logIn, profile]: any = useAuth()
+  const [logOut, logIn]: any = useAuth()
 
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -63,7 +62,9 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>{profile.givenName}</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        {localStorage.getItem('username')}
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem
         color="secondary"
@@ -114,7 +115,7 @@ export default function PrimarySearchAppBar() {
           <AccountCircle />
         </IconButton>
 
-        <p>{profile.givenName}</p>
+        <p>{localStorage.getItem('image')}</p>
       </MenuItem>
     </Menu>
   )
@@ -148,7 +149,7 @@ export default function PrimarySearchAppBar() {
             />
           </div>
           <div className={classes.grow} />
-          {profile.givenName !== null ? (
+          {localStorage.getItem('username') ? (
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
@@ -171,13 +172,13 @@ export default function PrimarySearchAppBar() {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <Avatar src={profile.imageUrl} />
+                <Avatar src={localStorage.getItem('image')!} />
               </IconButton>
             </div>
           ) : (
             <GoogleAuth />
           )}
-          {profile.givenName && (
+          {localStorage.getItem('username') && (
             <div className={classes.sectionMobile}>
               <IconButton
                 aria-label="show more"

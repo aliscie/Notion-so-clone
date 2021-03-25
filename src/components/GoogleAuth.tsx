@@ -1,7 +1,6 @@
 import React from 'react'
 import GoogleLogin from 'react-google-login'
 import useAuth from '../Hooks/useAuth'
-import useStorage from '../Hooks/useStorage'
 
 function GoogleAuth() {
   const [logOut, logIn, profile]: any = useAuth()

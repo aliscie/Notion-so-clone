@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 // components
 import PrimarySearchAppBar from './ui/PrimarySearchAppBar'
-import Posts from './components/Posts'
+import Posts from './Components/Posts'
 
 const TOKEN = localStorage.getItem('AUTH_TOKEN')!
 export const client = new ApolloClient({

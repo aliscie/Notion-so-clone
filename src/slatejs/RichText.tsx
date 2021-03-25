@@ -17,76 +17,46 @@ import {
   Element as SlateElement,
 } from 'slate'
 import { withHistory } from 'slate-history'
-import HoverToolbar from './HoverToolbar'
-import Element from './Element'
-import Leaf from './Leaf'
+import HoverToolbar from './Components/HoverToolbar'
+import Element from './Components/Element'
+import Leaf from './Components/Leaf'
 import Paper from '@material-ui/core/Paper'
 import usePosts from '../Hooks/usePosts'
+import insertMention from './function/insertMention'
+import withElements from './function/withElements'
+import Char from './Components/Char'
 const HOTKEYS: any = {
   'mod+b': 'bold',
   'mod+i': 'italic',
   'mod+u': 'underline',
   'mod+`': 'code',
 }
+const CHARACTERS = ['Component', 'usernam2']
 
-const CHARACTERS = ['username1', 'usernam2']
-const insertMention = (editor: Editor, character: string) => {
-  const mention = { type: 'mention', character, children: [{ text: '' }] }
-  Transforms.insertNodes(editor, mention)
-  Transforms.move(editor)
-}
-
-const RichTextExample = ({ item }: any) => {
+const RichText = ({ item }: any) => {
   const { loading, error, data, res, setstate }: any = usePosts()
   const ref = useRef<HTMLDivElement | null | any>()
-  const [value, setValue] = useState<Node[]>(JSON.parse(item.description))
-  React.useEffect(() => {
-    setValue(JSON.parse(item.description))
-  }, [item])
   const [search, setSearch] = useState('')
   const [index, setIndex] = useState(0)
   const [target, setTarget] = useState<Range | undefined | any>()
+
+  const [value, setValue] = useState<Node[]>(
+    JSON.parse(
+      item.description
+        ? item.description
+        : '[{"type":"paragraph","children":[{"text":""}]}]',
+    ),
+  )
+  React.useEffect(() => {
+    item.description && setValue(JSON.parse(item.description))
+  }, [item])
 
   const chars = CHARACTERS.filter((c: any) =>
     c.toString().toLowerCase().startsWith(search.toLowerCase()),
   ).slice(0, 10)
 
-  const renderElement = useCallback((props) => <Element {...props} />, [])
   const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
-  const withElements = (editor: any) => {
-    const { isInline, isVoid, normalizeNode } = editor
-    // this is for foced layout
-    // editor.normalizeNode = ([node, path]: any) => {
-    //   if (path.length === 0) {
-    //     if (editor.children.length < 1) {
-    //       const title = { type: "title", children: [{ text: "Untitled" }] };
-    //       Transforms.insertNodes(editor, title, { at: path.concat(0) });
-    //     }
 
-    //     for (const [child, childPath] of Node.children(editor, path)) {
-    //       const type = childPath[0] === 0 ? "title" : "paragraph";
-
-    //       if (SlateElement.isElement(child) && child.type !== type) {
-    //         const newProperties: Partial<SlateElement> = { type };
-    //         Transforms.setNodes(editor, newProperties, { at: childPath });
-    //       }
-    //     }
-    //   }
-
-    //   return normalizeNode([node, path]);
-    // };
-    editor.isInline = (element: any) => {
-      return element.type === 'mention' ? true : isInline(element)
-    }
-
-    editor.isVoid = (element: any) => {
-      return element.type === 'mention' ? true : isVoid(element)
-    }
-
-    return editor
-  }
-  // const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-  //🔴 is it bad to replace the the line upove
   const editor = useMemo(
     () => withElements(withReact(withHistory(createEditor()))),
     [],
@@ -97,9 +67,6 @@ const RichTextExample = ({ item }: any) => {
       for (const hotkey in HOTKEYS) {
         if (isHotkey(hotkey, event as any)) {
           event.preventDefault()
-          // TODO what this sposed to do?
-          // const mark = HOTKEYS[hotkey];
-          // toggleMark(editor, mark);
         }
       }
       if (target) {
@@ -139,6 +106,7 @@ const RichTextExample = ({ item }: any) => {
       el.style.left = `${rect.left + window.pageXOffset}px`
     }
   }, [chars.length, editor, index, search, target])
+
   const userId = 1 // parseInt(`${localStorage.getItem('userId')}`)
   var readOnly: boolean
 
@@ -191,7 +159,12 @@ const RichTextExample = ({ item }: any) => {
       <HoverToolbar />
       <Editable
         readOnly={readOnly}
-        renderElement={renderElement}
+        renderElement={useCallback(
+          (props) => (
+            <Element {...props} />
+          ),
+          [],
+        )}
         renderLeaf={renderLeaf}
         placeholder="Enter some rich text…"
         spellCheck
@@ -210,36 +183,11 @@ const RichTextExample = ({ item }: any) => {
             padding: '3px',
           }}
         >
-          {chars.map((char: any, i: number) => (
-            <div
-              onMouseEnter={(event: any) => {
-                event.target.style.backgroundColor = 'lightblue'
-              }}
-              onMouseLeave={(event: any) => {
-                event.target.style.backgroundColor = null
-              }}
-              // onClick={(event: any) => {
-              //   // TODO
-              //   console.log(event.target.innerText);
-              //   Transforms.select(editor, target);
-              //   insertMention(editor, event.target.innerText);
-              //   setTarget(null);
-              //   console.log("event.target");
-              // }}
-              key={char}
-              style={{
-                padding: '1px 3px',
-                borderRadius: '3px',
-                background: i === index ? '#B4D5FF' : 'transparent',
-              }}
-            >
-              {char}
-            </div>
-          ))}
+          {chars.map((char: any, i: number) => Char(char, i, index))}
         </Paper>
       )}
     </Slate>
   )
 }
 
-export default RichTextExample
+export default RichText
