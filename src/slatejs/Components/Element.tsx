@@ -21,16 +21,16 @@ const Element = (props: any) => {
   switch (element.type) {
     case 'table':
       return (
-        <TableContainer>
-          <Table {...attributes}>{children}</Table>
-        </TableContainer>
+        <table>
+          <tbody {...attributes}>{children}</tbody>
+        </table>
       )
+    case 'table-row':
+      return <tr {...attributes}>{children}</tr>
+    case 'table-cell':
+      return <td {...attributes}>{children}</td>
     case 'mention':
       return <MentionElement {...props} />
-    case 'table-row':
-      return <TableRow {...attributes}>{children}</TableRow>
-    case 'table-cell':
-      return <TableCell {...attributes}>{children}</TableCell>
     case 'block-quote':
       return <blockquote {...attributes}>{children}</blockquote>
     case 'bulleted-list':

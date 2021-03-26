@@ -12,10 +12,12 @@ import withElements from './function/withElements'
 import Char from './Components/Char'
 import useMention from './Hooks/useMention'
 import insertComp from './function/insertCom'
+import useStyles from '../uiStyles/useStyles'
 
 const CHARACTERS = ['Component', 'usernam2', 'user1']
 
 const RichText = ({ item }: any) => {
+  const classes = useStyles()
   const { loading, error, data, res, setstate }: any = usePosts()
   const ref = useRef<HTMLDivElement | null | any>()
 
@@ -36,16 +38,6 @@ const RichText = ({ item }: any) => {
     () => withElements(withReact(withHistory(createEditor()))),
     [],
   )
-  const userId = 1 // parseInt(`${localStorage.getItem('userId')}`)
-  var readOnly: boolean
-
-  if (item.addedBy === userId) {
-    readOnly = false
-  } else if (item.whoCanEdite.length > 0) {
-    readOnly = !item.whoCanEdite.includes(userId) ? true : false
-  } else {
-    readOnly = false
-  }
 
   const [index, chars, onKeyDown, onChange] = useMention(
     /^@(\w+)$/,
@@ -62,6 +54,18 @@ const RichText = ({ item }: any) => {
     ['table', 'title', 'numbered-list'],
     ref,
   )
+
+  const userId = localStorage.getItem('userId')
+  const allowedUsers = item.whoCanEdite.map((item: any) => item.id)
+  var readOnly: boolean
+
+  if (item.addedBy.id === localStorage.getItem('userId')) {
+    readOnly = false
+  } else if (item.whoCanEdite.length > 0) {
+    readOnly = !allowedUsers.includes(userId) ? true : false
+  } else {
+    readOnly = true
+  }
 
   return (
     <Slate
@@ -104,7 +108,9 @@ const RichText = ({ item }: any) => {
             padding: '3px',
           }}
         >
-          {chars.map((char: any, i: number) => Char(char, i, index))}
+          {chars.map((char: any, i: number) => (
+            <p className={classes.hoverig}>{char}</p>
+          ))}
         </Paper>
       )}
 
@@ -120,7 +126,9 @@ const RichText = ({ item }: any) => {
             padding: '3px',
           }}
         >
-          {Chars.map((char: any, i: number) => Char(char, i, In))}
+          {Chars.map((char: any, i: number) => (
+            <p className={classes.hoverig}>{char}</p>
+          ))}
         </Paper>
       )}
     </Slate>

@@ -1,12 +1,6 @@
 import React from 'react'
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  useMutation,
-  gql,
-} from '@apollo/client'
+import { useQuery, useMutation, gql } from '@apollo/client'
+import { useSnackbar } from 'notistack'
 
 const GET_TODOS = gql`
   query {
@@ -20,7 +14,6 @@ const GET_TODOS = gql`
         username
       }
       whoCanEdite {
-        username
         id
       }
     }
@@ -38,8 +31,10 @@ const UPDATE_TODO = gql`
 `
 
 export default function usePosts() {
+  const { enqueueSnackbar } = useSnackbar()
   const [state, setstate] = React.useState({ id: null, description: '' })
   const { loading, error, data } = useQuery(GET_TODOS)
+
   const [updatePost, res]: any = useMutation(UPDATE_TODO)
   React.useEffect(() => {
     const timeout = setTimeout(() => {
@@ -47,7 +42,7 @@ export default function usePosts() {
       description.length > 1 &&
         updatePost({
           variables: { id, description: description },
-        })
+        }).catch((e: any) => enqueueSnackbar(`${e}`, { variant: 'error' }))
     }, 500)
     return () => clearTimeout(timeout)
   }, [state.description])

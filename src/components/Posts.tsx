@@ -2,14 +2,6 @@
 import React from 'react'
 import { render } from 'react-dom'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  useMutation,
-  gql,
-} from '@apollo/client'
 
 import { Paper, CardHeader, Avatar, IconButton } from '@material-ui/core'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
@@ -26,14 +18,18 @@ import CardContent from '@material-ui/core/CardContent'
 import useStyles from '../uiStyles/useStyles'
 import usePosts from '../Hooks/usePosts'
 import RichText from '../slatejs/RichText'
-
+import { useSnackbar } from 'notistack'
 import Collaps from '../ui/Collaps'
 
-function Posts() {
+function Posts(props: any) {
+  const { enqueueSnackbar } = useSnackbar()
+
   const classes = useStyles()
   const { loading, error, data, res, setstate } = usePosts()
+
   if (loading) return <CircularProgress />
   else if (error) {
+    enqueueSnackbar(JSON.stringify(error), { variant: 'error' })
     return <p> Error </p>
   }
 

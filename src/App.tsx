@@ -2,16 +2,18 @@ import React from 'react'
 // Libraries
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { ApolloProvider } from '@apollo/client'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 // components
 import PrimarySearchAppBar from './ui/PrimarySearchAppBar'
 import Posts from './Components/Posts'
 
+import { SnackbarProvider, VariantType, useSnackbar } from 'notistack'
+
 const TOKEN = localStorage.getItem('AUTH_TOKEN')!
 export const client = new ApolloClient({
-  // uri: 'http://127.0.0.1:8000/graphql/',
-  uri: 'https://autodox-backend.herokuapp.com/graphql/',
+  uri: 'http://127.0.0.1:8000/graphql/',
+  // uri: 'https://autodox-backend.herokuapp.com/graphql/',
   cache: new InMemoryCache(),
   headers: {
     authorization: `JWT ${TOKEN}`,
@@ -22,7 +24,7 @@ export const client = new ApolloClient({
 
 function App() {
   return (
-    <div>
+    <SnackbarProvider maxSnack={3}>
       <ApolloProvider client={client}>
         <Router>
           <Switch>
@@ -35,7 +37,7 @@ function App() {
           </Switch>
         </Router>
       </ApolloProvider>
-    </div>
+    </SnackbarProvider>
   )
 }
 

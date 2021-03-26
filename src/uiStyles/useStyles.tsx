@@ -20,20 +20,22 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'block',
       },
     },
-    search: {
+    hoverig: {
       transitionProperty: 'background-color',
       transitionTimingFunction: 'ease-in-out',
       transitionDuration: '500ms',
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
 
-      backgroundColor: fade(theme.palette.primary.light, 0.1),
       '&:hover': {
         transitionProperty: 'background-color',
         transitionTimingFunction: 'ease-in-out',
         transitionDuration: '300ms',
         backgroundColor: fade(theme.palette.primary.main, 0.25),
       },
+    },
+    search: {
+      position: 'relative',
       marginRight: theme.spacing(2),
       marginLeft: 0,
       width: '100%',
