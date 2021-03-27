@@ -1,20 +1,6 @@
-import {
-  Editable,
-  withReact,
-  Slate,
-  ReactEditor,
-  useSelected,
-  useFocused,
-} from 'slate-react'
-import Avatar from '@material-ui/core/Avatar'
-import Chip from '@material-ui/core/Chip'
-
-import TableRow from '@material-ui/core/TableRow'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
+import { useSelected, useFocused } from 'slate-react'
+import Divider from '@material-ui/core/Divider'
+import Typography from '@material-ui/core/Typography'
 
 const Element = (props: any) => {
   const { attributes, children, element } = props
@@ -35,16 +21,37 @@ const Element = (props: any) => {
       return <blockquote {...attributes}>{children}</blockquote>
     case 'bulleted-list':
       return <ul {...attributes}>{children}</ul>
-    case 'heading-one':
-      return <h1 {...attributes}>{children}</h1>
-    case 'heading-two':
-      return <h2 {...attributes}>{children}</h2>
     case 'list-item':
       return <li {...attributes}>{children}</li>
     case 'numbered-list':
       return <ol {...attributes}>{children}</ol>
     case 'title':
       return <h2 {...attributes}>{children}</h2>
+    case 'divider':
+      return (
+        <div contentEditable={false} {...attributes}>
+          <Divider />
+          {children}
+        </div>
+      )
+    case 'h1':
+    case 'h2':
+    case 'h3':
+    case 'h4':
+    case 'h5':
+    case 'h6':
+    case 'subtitle1':
+    case 'subtitle2':
+    case 'body1':
+    case 'body2':
+    case 'button':
+    case 'caption':
+    case 'overline':
+      return (
+        <Typography variant={element.type} {...attributes}>
+          {children}
+        </Typography>
+      )
     default:
       return <p {...attributes}>{children}</p>
   }

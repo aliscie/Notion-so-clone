@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import PrimarySearchAppBar from './ui/PrimarySearchAppBar'
 import Posts from './Components/Posts'
 
-import { SnackbarProvider, VariantType, useSnackbar } from 'notistack'
+import { SnackbarProvider } from 'notistack'
 
 const TOKEN = localStorage.getItem('AUTH_TOKEN')!
 export const client = new ApolloClient({

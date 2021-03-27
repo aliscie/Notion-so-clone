@@ -25,14 +25,22 @@ const useStyles = makeStyles((theme: Theme) =>
       transitionTimingFunction: 'ease-in-out',
       transitionDuration: '500ms',
       position: 'relative',
-      borderRadius: theme.shape.borderRadius,
+      backgroundColor: 'white',
 
       '&:hover': {
         transitionProperty: 'background-color',
         transitionTimingFunction: 'ease-in-out',
         transitionDuration: '300ms',
-        backgroundColor: fade(theme.palette.primary.main, 0.25),
+        backgroundColor: fade(theme.palette.primary.light, 1),
+        color: 'white',
       },
+    },
+    focused: {
+      transitionProperty: 'background-color',
+      transitionTimingFunction: 'ease-in-out',
+      transitionDuration: '300ms',
+      backgroundColor: fade(theme.palette.primary.light, 1),
+      color: 'white',
     },
     search: {
       position: 'relative',

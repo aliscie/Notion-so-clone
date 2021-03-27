@@ -1,4 +1,11 @@
-import React, { useCallback, useMemo, useState, useRef, useEffect } from 'react'
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+  useEffect,
+  Children,
+} from 'react'
 import { Editable, withReact, Slate } from 'slate-react'
 import { createEditor, Node } from 'slate'
 import { withHistory } from 'slate-history'
@@ -9,10 +16,22 @@ import Paper from '@material-ui/core/Paper'
 import usePosts from '../Hooks/usePosts'
 import insertMention from './function/insertMention'
 import withElements from './function/withElements'
-import Char from './Components/Char'
 import useMention from './Hooks/useMention'
 import insertComp from './function/insertCom'
 import useStyles from '../uiStyles/useStyles'
+import findIcon from './function/findIcon'
+import MenuItem from '@material-ui/core/MenuItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import Divider from '@material-ui/core/Divider'
+import Typography from '@material-ui/core/Typography'
+import {
+  Editor,
+  Transforms,
+  Range,
+  Point,
+  Element as SlateElement,
+} from 'slate'
+import { Tooltip } from '@material-ui/core'
 
 const CHARACTERS = ['Component', 'usernam2', 'user1']
 
@@ -47,11 +66,28 @@ const RichText = ({ item }: any) => {
     ref,
   )
 
-  const [In, Chars, onKey, onCh] = useMention(
+  const [In, Chars, onKey, onCh, setIn, activateMentionInsert] = useMention(
     /^\/(\w+)$/,
     insertComp,
     editor,
-    ['table', 'title', 'numbered-list'],
+    [
+      'table',
+      'h1',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'h6',
+      'subtitle1',
+      'subtitle2',
+      'body1',
+      'body2',
+      'button',
+      'caption',
+      'overline',
+      'numbered-list',
+      'divider',
+    ],
     ref,
   )
 
@@ -63,6 +99,8 @@ const RichText = ({ item }: any) => {
     readOnly = false
   } else if (item.whoCanEdite.length > 0) {
     readOnly = !allowedUsers.includes(userId) ? true : false
+  } else if (localStorage.getItem('userId') === '1') {
+    readOnly = false
   } else {
     readOnly = true
   }
@@ -83,7 +121,7 @@ const RichText = ({ item }: any) => {
         readOnly={readOnly}
         renderElement={useCallback(
           (props) => (
-            <Element {...props} />
+            <Element editor={editor} {...props} />
           ),
           [],
         )}
@@ -113,23 +151,57 @@ const RichText = ({ item }: any) => {
           ))}
         </Paper>
       )}
-
       {Chars && Chars.length > 0 && (
-        <Paper
+        <div
           ref={ref}
           style={{
+            maxHeight: '30%',
+            overflow: 'auto',
             cursor: 'pointer',
             top: '-9999px',
             left: '-9999px',
             position: 'absolute',
             zIndex: 1,
             padding: '3px',
+            backgroundColor: 'white',
           }}
         >
-          {Chars.map((char: any, i: number) => (
-            <p className={classes.hoverig}>{char}</p>
-          ))}
-        </Paper>
+          {Chars.map((char: any, i: number) => {
+            var current: any
+            const [match]: any = Editor.nodes(editor, {
+              match: (n: any) => (current = n.type),
+            })
+
+            return (
+              <Tooltip
+                title={
+                  <div>
+                    <b>Click</b> or Hit <b>Enter</b>: for new block
+                    <div>
+                      <b>Tab</b>: to modify the current block.
+                    </div>
+                  </div>
+                }
+              >
+                <div>
+                  <MenuItem
+                    style={{ background: i === In ? 'lightgray' : 'white' }}
+                    onMouseEnter={() => setIn(i)}
+                  >
+                    <Typography
+                      onMouseDown={activateMentionInsert}
+                      variant={char}
+                    >
+                      {char}
+                    </Typography>
+
+                    {/* the current is {current} */}
+                  </MenuItem>
+                </div>
+              </Tooltip>
+            )
+          })}
+        </div>
       )}
     </Slate>
   )

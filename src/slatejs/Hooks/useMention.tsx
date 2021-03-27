@@ -26,7 +26,12 @@ export default function useMention(
       el.style.left = `${rect.left + window.pageXOffset}px`
     }
   }, [chars.length, editor, index, search, target])
-
+  function activateMentionInsert(key: any) {
+    Transforms.select(editor, target!)
+    insertMention(editor, chars[index], key)
+    setTarget(null)
+    return
+  }
   const onKeyDown = React.useCallback(
     (event) => {
       if (target) {
@@ -43,11 +48,8 @@ export default function useMention(
             break
           case 'Tab':
           case 'Enter':
-            console.log('enter')
             event.preventDefault()
-            Transforms.select(editor, target!)
-            insertMention(editor, chars[index])
-            setTarget(null)
+            activateMentionInsert(event.key)
             break
           case 'Escape':
             event.preventDefault()
@@ -81,5 +83,12 @@ export default function useMention(
     setTarget(null)
   }
 
-  return [index, target && chars, onKeyDown, onChange]
+  return [
+    index,
+    target && chars,
+    onKeyDown,
+    onChange,
+    setIndex,
+    activateMentionInsert,
+  ]
 }
