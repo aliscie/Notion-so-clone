@@ -1,7 +1,7 @@
 import { useSelected, useFocused } from 'slate-react'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
-
+import UserChip from '../../Components/UserChip'
 const Element = (props: any) => {
   const { attributes, children, element } = props
   switch (element.type) {
@@ -70,13 +70,11 @@ const MentionElement = ({ attributes, children, element }: any) => {
         margin: '0 1px',
         verticalAlign: 'baseline',
         display: 'inline-block',
-        borderRadius: '4px',
-        backgroundColor: '#eee',
+        borderRadius: '20px',
         fontSize: '0.9em',
-        boxShadow: selected && focused ? '0 0 0 2px #B4D5FF' : 'none',
       }}
     >
-      @{element.character}
+      {UserChip(element.character, selected && focused)}
       {children}
     </span>
   )

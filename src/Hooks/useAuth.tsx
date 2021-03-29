@@ -1,15 +1,6 @@
 import React from 'react'
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  useMutation,
-  gql,
-} from '@apollo/client'
+import { useMutation, gql } from '@apollo/client'
 import { client } from '../App'
-import { BlockOutlined, LocalGroceryStoreTwoTone } from '@material-ui/icons'
-import { useHistory } from 'react-router-dom'
 
 const UPDATE_TODO = gql`
   mutation($accessToken: String!) {
@@ -26,17 +17,8 @@ const UPDATE_TODO = gql`
   }
 `
 
-type LoginResponse = {
-  socialAuth: {
-    token: string
-    social: { id: string; provider: 'google-oauth2'; uid: string }
-  }
-}
-
 function useAuth() {
   const [accessToken, setAccessToken] = React.useState<string>('')
-  console.log(accessToken)
-  console.log('authentication function successfully activated')
   const [login] = useMutation(UPDATE_TODO, {
     variables: {
       accessToken: accessToken,
