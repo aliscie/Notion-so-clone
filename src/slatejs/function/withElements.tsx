@@ -44,9 +44,11 @@ const withElements = (editor: any) => {
               type: 'numbered-list',
               children: [],
             }
-            return Transforms.insertNodes(editor, list, {
+            Transforms.wrapNodes(editor, list, {
               match: (n) => !Editor.isEditor(n) && SlateElement.isElement(n),
             })
+            Transforms.insertText(editor, '')
+            return
           default:
             return
         }

@@ -1,6 +1,9 @@
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    popover: {
+      padding: theme.spacing(2),
+    },
     form: {
       padding: '10px',
     },
@@ -25,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
       transitionTimingFunction: 'ease-in-out',
       transitionDuration: '500ms',
       position: 'relative',
-      backgroundColor: 'white',
 
       '&:hover': {
         transitionProperty: 'background-color',

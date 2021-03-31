@@ -29,7 +29,7 @@ const RichText = ({ item }: any) => {
   }
 
   const classes = useStyles()
-  const { loading, error, data, res, setstate }: any = usePosts()
+  const [loading, error, data, res, setstate]: any = usePosts()
   const ref = useRef<HTMLDivElement | null | any>()
 
   const [value, setValue] = useState<Node[]>(
@@ -42,8 +42,6 @@ const RichText = ({ item }: any) => {
   React.useEffect(() => {
     item.description && setValue(JSON.parse(item.description))
   }, [item])
-
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
 
   const editor = useMemo(
     () => withElements(withReact(withHistory(createEditor()))),
@@ -118,7 +116,12 @@ const RichText = ({ item }: any) => {
           ),
           [],
         )}
-        renderLeaf={renderLeaf}
+        renderLeaf={useCallback(
+          (props) => (
+            <Leaf {...props} />
+          ),
+          [],
+        )}
         placeholder="Enter some rich text…"
         spellCheck
         autoFocus
