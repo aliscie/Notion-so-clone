@@ -3,7 +3,7 @@ import { Editable, withReact, Slate } from 'slate-react'
 import { createEditor, Node } from 'slate'
 import { withHistory } from 'slate-history'
 import HoverToolbar from './Components/HoverToolbar'
-import Element from './Components/Element'
+import Element from './Components/Element.jsx'
 import Leaf from './Components/Leaf'
 import usePosts from '../Hooks/usePosts'
 import insertMention from './function/insertMention'
@@ -14,6 +14,7 @@ import useStyles from '../uiStyles/useStyles'
 import UserChip from '../Components/UserChip'
 import MenuItems from './Components/MenuItems'
 import { useQuery, gql } from '@apollo/client'
+import useConvert from './Hooks/useConvert'
 const RichText = ({ item }: any) => {
   const values = useQuery(gql`
     query {
@@ -81,6 +82,7 @@ const RichText = ({ item }: any) => {
     ],
     ref,
   )
+  const [change]: any = useConvert(/(<)(.+)(>)/, insertMention, editor, ref)
 
   const userId = localStorage.getItem('userId')
   const allowedUsers = item.whoCanEdite.map((item: any) => item.id)
@@ -103,8 +105,9 @@ const RichText = ({ item }: any) => {
       onChange={(value) => {
         setValue(value)
         setstate({ id: item.id, description: JSON.stringify(value) })
-        onChange(editor.selection)
-        onCh(editor.selection)
+        onChange()
+        onCh()
+        change()
       }}
     >
       <HoverToolbar />

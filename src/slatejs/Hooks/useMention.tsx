@@ -60,7 +60,8 @@ export default function useMention(
     },
     [index, search, target],
   )
-  function onChange(selection: any) {
+  function onChange() {
+    const { selection } = editor
     if (selection && Range.isCollapsed(selection)) {
       const [start] = Range.edges(selection)
       const wordBefore = Editor.before(editor, start, { unit: 'word' })

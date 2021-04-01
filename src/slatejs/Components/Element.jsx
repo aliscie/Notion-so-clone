@@ -1,8 +1,13 @@
+import React from 'react'
 import { useSelected, useFocused } from 'slate-react'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import UserChip from '../../Components/UserChip'
-const Element = (props: any) => {
+import { Parser } from 'hot-formula-parser'
+var parser = new Parser()
+
+const Element = (props) => {
+  const [s,set]=React.useState(null)
   const { attributes, children, element } = props
   switch (element.type) {
     case 'table':
@@ -27,6 +32,18 @@ const Element = (props: any) => {
       return <ol {...attributes}>{children}</ol>
     case 'title':
       return <h2 {...attributes}>{children}</h2>
+    case 'formula':
+      
+      return (
+        <span
+          onMouseEnter={() => set(true)}
+          onMouseLeave={() => set(false)}>
+         
+          <code style={{ color: 'blue' }}>{s && children}{s && '='}</code>
+          <span>{`${parser.parse(element.children[0].text).result}`}</span>
+          
+        </span>
+      )
     case 'divider':
       return (
         <div contentEditable={false} {...attributes}>
@@ -57,7 +74,7 @@ const Element = (props: any) => {
   }
 }
 
-const MentionElement = ({ attributes, children, element }: any) => {
+const MentionElement = ({ attributes, children, element }) => {
   const selected = useSelected()
   const focused = useFocused()
 
