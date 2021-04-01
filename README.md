@@ -34,3 +34,5 @@ This is a graphql api used as a backend for the app [notion-so-clone-api]() whic
 ## [Demo](firebase)
 
 - open
+- Authenticaion ![gif image show auth](https://media.giphy.com/media/v5dt7NXuEWlJCELSOz/giphy.gif)
+- notion like ![notion like](https://media.giphy.com/media/Xsd62dsYUHW36sNYx9/giphy.gif)
