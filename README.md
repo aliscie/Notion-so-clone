@@ -2,7 +2,7 @@
 
 # Intro
 
-There is nothing better and simpller to add to your resume then twetter clone. But in this app I compine more things which is notions.so clone. I really hate the menu bar where you have to go the the menu bar and selecte insert then select image, but if you can just say `/image` and hit anter that would be much easer, and I beilive that this will be the future of docs even goodl docs may switch to this new way of interacting with docs.
+There is nothing better and simpller to add to your resume then twetter clone. But in this app I compine more things which is notions.so clone. I really hate the menu bar where you have to go the the menu bar and selecte insert then select image, but if you can just say `/image` and hit anter that would be much easer, and I beilive that this will be the future of docs even goodl docs may switch to this new way of interacting with docs. My first atempt to create a notion clone was on [this repo](https://github.com/aliscie/Learning-webstack-from-cloning-notion.so) but now this repo is much better and has more features.
 
 # please fork and make pull requests to learn from eachother.
 
