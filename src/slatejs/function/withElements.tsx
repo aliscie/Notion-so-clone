@@ -10,6 +10,7 @@ const SHORTCUTS: any = {
   '1.': 'list-item',
   '#': 'hash-tag',
   '##': 'heading-two',
+  '<<': 'formula',
 }
 
 const withElements = (editor: any) => {
@@ -44,9 +45,21 @@ const withElements = (editor: any) => {
               type: 'numbered-list',
               children: [],
             }
-            return Transforms.insertNodes(editor, list, {
+            Transforms.wrapNodes(editor, list, {
               match: (n) => !Editor.isEditor(n) && SlateElement.isElement(n),
             })
+            Transforms.insertText(editor, '')
+            return
+          // case 'formula':
+          //   const formula: any = [
+          //     {
+          //       type: 'formula',
+          //       children: [],
+          //     },
+          //   ]
+          //   Transforms.insert(editor, formula)
+
+          //   return
           default:
             return
         }
