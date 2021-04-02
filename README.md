@@ -21,7 +21,16 @@ There is nothing better and simpller to add to your resume then twetter clone. B
 1. \$`git clone https://github.com/aliscie/autodox...`
 
 ## My repo strecture
-
+1. `src/slatejs`
+  1. this is an endpendant forlder that you can just copy and paste in any sandbox or reactjs project and it will work just fine. You can consdir it as sub-app.
+  2.  `src/slatejs/Components`
+  4. `src/slatejs/function`
+  5. `src/slatejs/Hooks`
+2. `src/Components`
+3. `src/ui`
+  - here you will find materil ui costum reusable indpendetn components. and you can extract this file out of the my app and reuse it anywhere you like.
+4. `src/uiStyles`
+  - this is just material ui `useStyles()` functioanlities.
 ### Branches
 
 1. `mater` branch only for code
