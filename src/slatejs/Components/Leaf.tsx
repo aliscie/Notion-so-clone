@@ -41,6 +41,7 @@ const Leaf = (props: any) => {
             </span>
             <Popper id={id} open={open} anchorEl={anchorEl}>
               <Paper>
+                xx
                 {/* <RichText
                   item={{
                     addedBy: { id: 0 },
