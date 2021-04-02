@@ -58,7 +58,9 @@ export default function CustomizedDividers() {
     newFormats: string[],
   ) => {
     newFormats.map((format) => {
-      Editor.addMark(editor, format, true)
+      Editor.addMark(editor, format, {
+        username: localStorage.getItem('username')! || '',
+      })
     })
     const diffrence = value.filter((item) => !newFormats.includes(item))
     diffrence.map((diff) => Editor.removeMark(editor, diff))

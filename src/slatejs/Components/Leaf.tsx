@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import Popover from '@material-ui/core/Popover'
 import useStyles from '../../uiStyles/useStyles'
 import { Paper } from '@material-ui/core'
+import UserChip from '../../Components/UserChip'
 
 const Leaf = (props: any) => {
   const ref = React.useRef<HTMLButtonElement | null>(null)
@@ -40,8 +41,16 @@ const Leaf = (props: any) => {
               {children}
             </span>
             <Popper id={id} open={open} anchorEl={anchorEl}>
-              <Paper>
-                xx
+              <Paper
+                style={{
+                  padding: '4px',
+                  backgroundColor: 'lightgray',
+                  borderRadius: '40px',
+                }}
+              >
+                {UserChip(leaf.Special.username)}
+                {/* TODO how to make this comment editable */}
+                you comment is here.
                 {/* <RichText
                   item={{
                     addedBy: { id: 0 },
