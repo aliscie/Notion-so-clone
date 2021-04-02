@@ -1,74 +1,18 @@
 import { Editor, Transforms } from 'slate'
 
 const insertComp = (editor: Editor, character: string, key: any) => {
-  const table: any = {
-    type: character,
-    children: [
-      {
-        type: 'table-row',
-        children: [
-          {
-            type: 'table-cell',
-            children: [{ text: '' }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: 'Human', bold: true }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: 'Dog', bold: true }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: 'Cat', bold: true }],
-          },
-        ],
-      },
-      {
-        type: 'table-row',
-        children: [
-          {
-            type: 'table-cell',
-            children: [{ text: '# of Feet', bold: true }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: '2' }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: '4' }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: '4' }],
-          },
-        ],
-      },
-      {
-        type: 'table-row',
-        children: [
-          {
-            type: 'table-cell',
-            children: [{ text: '# of Lives', bold: true }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: '1' }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: '1' }],
-          },
-          {
-            type: 'table-cell',
-            children: [{ text: '9' }],
-          },
-        ],
-      },
-    ],
-  }
+  const table: any = [
+    {
+      type: 'h3',
+      children: [
+        { text: 'this ' },
+        { text: 'comment', Special: { username: 'weplutus.1' } },
+        { text: ' added by weplutus.1, another ' },
+        { text: 'comment', Special: { username: 'Ali' } },
+        { text: ' added  by ali' },
+      ],
+    },
+  ]
 
   switch (character) {
     case 'table':

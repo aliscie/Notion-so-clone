@@ -4,22 +4,34 @@ import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import UserChip from '../../Components/UserChip'
 import { Parser } from 'hot-formula-parser'
+import { HotTable } from '@handsontable/react'
+import 'handsontable/dist/handsontable.full.css'
+
 var parser = new Parser()
 
 const Element = (props) => {
+
   const [s,set]=React.useState(null)
   const { attributes, children, element } = props
   switch (element.type) {
     case 'table':
       return (
-        <table>
-          <tbody {...attributes}>{children}</tbody>
-        </table>
+        <div {...attributes}>
+          <HotTable
+          // licenseKey="00000-00000-00000-00000-00000"
+          data={element.data}
+          colHeaders={true}
+          rowHeaders={true}
+          width="600"
+          height="300"
+        />
+          {children}
+        </div>
       )
-    case 'table-row':
-      return <tr {...attributes}>{children}</tr>
-    case 'table-cell':
-      return <td {...attributes}>{children}</td>
+    // case 'table-row':
+    //   return <tr {...attributes}>{children}</tr>
+    // case 'table-cell':
+    //   return <td {...attributes}>{children}</td>
     case 'mention':
       return <MentionElement {...props} />
     case 'block-quote':
@@ -39,7 +51,7 @@ const Element = (props) => {
           onMouseEnter={() => set(true)}
           onMouseLeave={() => set(false)}>
          
-          <code style={{ color: 'blue' }}>{s && children}{s && '='}</code>
+          {s && <code style={{ color: 'blue' }}>{ children}{s && '='}</code>}
           <span>{`${parser.parse(element.children[0].text).result}`}</span>
           
         </span>
