@@ -9,7 +9,6 @@ export default function useConvert(
   ref: any,
 ) {
   function onChange() {
-    console.log('object')
     const { selection } = editor
     if (selection && Range.isCollapsed(selection)) {
       const [start] = Range.edges(selection)
@@ -18,7 +17,7 @@ export default function useConvert(
       const beforeRange = before && Editor.range(editor, before, start)
       const beforeText = beforeRange && Editor.string(editor, beforeRange)
       const beforeMatch = beforeText && beforeText.match(reg)
-      console.log(beforeMatch)
+      // console.log(beforeMatch)
 
       if (beforeMatch) {
         // TODO

@@ -38,6 +38,7 @@
     "passport-google-token": "^0.1.2",
     "react": "^17.0.1",
     "react-data-grid": "^5.0.1",
+    "react-data-grid-addons": "^7.0.0-alpha.24",
     "react-dom": "^17.0.1",
     "react-google-login": "^5.2.2",
     "react-redux": "^7.2.3",
@@ -50,6 +51,7 @@
     "slate-react": "^0.59.0",
     "string-similarity": "^4.0.4",
     "typescript": "^4.2.3",
+    "update": "^0.7.4",
     "web-vitals": "^1.1.1"
   },
   "scripts": {

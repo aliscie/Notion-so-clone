@@ -4,30 +4,36 @@ import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import UserChip from '../../Components/UserChip'
 import { Parser } from 'hot-formula-parser'
-import { HotTable } from '@handsontable/react'
-import 'handsontable/dist/handsontable.full.css'
+import ReactDataGrid from 'react-data-grid'
+
 
 var parser = new Parser()
 
 const Element = (props) => {
+  const onGridRowsUpdated = (actions:any) => {
+    console.log(actions)
+  };
 
   const [s,set]=React.useState(null)
   const { attributes, children, element } = props
   switch (element.type) {
     case 'table':
-      return (
-        <div {...attributes}>
-          <HotTable
-          // licenseKey="00000-00000-00000-00000-00000"
-          data={element.data}
-          colHeaders={true}
-          rowHeaders={true}
-          width="600"
-          height="300"
+      return (<div
+      contentEditable={false}
+        {...attributes}>
+        <ReactDataGrid
+        columns={element.columns}
+        rowGetter={(i) => element.rows[i]}
+        rowsCount={element.rows.length}
+          minHeight={150}
+          // onGridRowsUpdated={eval(element.onGridRowsUpdated)}
+          onGridRowsUpdated={onGridRowsUpdated}
+
         />
+        
           {children}
-        </div>
-      )
+        </div>)
+      
     // case 'table-row':
     //   return <tr {...attributes}>{children}</tr>
     // case 'table-cell':
