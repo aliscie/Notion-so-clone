@@ -1,6 +1,9 @@
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    chip: {
+      background: 'lightgrey',
+    },
     popover: {
       padding: theme.spacing(2),
     },
@@ -41,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transitionProperty: 'background-color',
       transitionTimingFunction: 'ease-in-out',
       transitionDuration: '300ms',
-      backgroundColor: fade(theme.palette.primary.light, 1),
+      backgroundColor: fade(theme.palette.primary.dark, 1),
       color: 'white',
     },
     search: {
