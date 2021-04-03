@@ -1,5 +1,5 @@
 import React from 'react'
-import { useMutation, gql } from '@apollo/client'
+import { useQuery, useMutation, gql } from '@apollo/client'
 import { client } from '../App'
 
 const UPDATE_TODO = gql`
@@ -18,6 +18,15 @@ const UPDATE_TODO = gql`
 `
 
 function useAuth() {
+  const values = useQuery(gql`
+    query {
+      users {
+        username
+        imageUrl
+      }
+    }
+  `)
+
   const [accessToken, setAccessToken] = React.useState<string>('')
   const [login] = useMutation(UPDATE_TODO, {
     variables: {

@@ -1,22 +1,18 @@
 import React from 'react'
 import { useApolloClient } from '@apollo/client'
 import useStyles from '../uiStyles/useStyles'
-import { useSelected, useFocused } from 'slate-react'
 function UserChip(username: string, select?: boolean) {
   // const classes = useStyles()
-  const selected = useSelected()
-  const focused = useFocused()
 
   const client: any = useApolloClient()
+  console.log(client.cache.data.data.ROOT_QUERY)
 
   var user: { username: string; imageUrl: string } = {
     username: '',
     imageUrl: '',
   }
   const parsed_users = client.cache.data.data.ROOT_QUERY.users
-  if (username && parsed_users) {
-    user = parsed_users.find((item: any) => item.username == username)
-  }
+  user = parsed_users.find((item: any) => item.username === username)
 
   return (
     <span
@@ -26,16 +22,16 @@ function UserChip(username: string, select?: boolean) {
         paddingBottom: '0px',
         display: 'inline-block',
         borderRadius: '50em',
-        backgroundColor: selected && focused ? 'lightblue' : 'lightgray',
+        backgroundColor: select ? 'lightblue' : 'lightgray',
       }}
     >
       <img
         style={{
-          border: '4px solid gray',
+          border: '0.1em solid gray',
           float: 'left',
           height: '1.2em',
           width: '1.2em',
-          borderRadius: '50em',
+          borderRadius: '50%',
         }}
         alt={username[0]}
         src={user.imageUrl}

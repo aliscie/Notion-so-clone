@@ -4,8 +4,12 @@ import Typography from '@material-ui/core/Typography'
 import UserChip from '../../Components/UserChip'
 import { parser } from '../function/formulaParsers'
 import ReactDataGrid from 'react-data-grid'
+import { useSelected, useFocused } from 'slate-react'
 
 const Element = (props: any) => {
+  const selected = useSelected()
+  const focused = useFocused()
+
   const onGridRowsUpdated = (actions: any) => {
     console.log(actions)
   }
@@ -32,7 +36,7 @@ const Element = (props: any) => {
     case 'mention':
       return (
         <span {...attributes} contentEditable={false}>
-          {UserChip(element.character)}
+          {UserChip(element.character, selected)}
           {children}
         </span>
       )

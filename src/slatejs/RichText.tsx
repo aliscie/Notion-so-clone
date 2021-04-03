@@ -13,21 +13,16 @@ import insertComp from './function/insertCom'
 import useStyles from '../uiStyles/useStyles'
 import UserChip from '../Components/UserChip'
 import MenuItems from './Components/MenuItems'
-import { useQuery, gql } from '@apollo/client'
+import { useApolloClient } from '@apollo/client'
 import useConvert from './Hooks/useConvert'
+
 const RichText = ({ item }: any) => {
-  const values = useQuery(gql`
-    query {
-      users {
-        username
-        imageUrl
-      }
-    }
-  `)
+  const client: any = useApolloClient()
+
   var CHARACTERS: any = ['']
-  if (!values.loading && !values.error) {
-    CHARACTERS = values.data.users.map((item: any) => item.username)
-  }
+  CHARACTERS = client.cache.data.data.ROOT_QUERY.users.map(
+    (item: any) => item.username,
+  )
 
   const classes = useStyles()
   const [loading, error, data, res, setstate]: any = usePosts()
