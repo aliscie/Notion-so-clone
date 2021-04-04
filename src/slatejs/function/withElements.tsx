@@ -8,6 +8,7 @@ import {
 
 const SHORTCUTS: any = {
   '1.': 'list-item',
+  // 'reg((\d)(\.))': 'list-item',
   '#': 'hash-tag',
   '##': 'heading-two',
 }

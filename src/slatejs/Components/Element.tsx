@@ -5,34 +5,16 @@ import UserChip from '../../Components/UserChip'
 import { parser } from '../function/formulaParsers'
 import ReactDataGrid from 'react-data-grid'
 import { useSelected, useFocused } from 'slate-react'
+import Table from '../SlateElements/Table'
+import Formula from '../SlateElements/Formula'
 
 const Element = (props: any) => {
   const selected = useSelected()
-  const focused = useFocused()
 
-  const onGridRowsUpdated = (actions: any) => {
-    console.log(actions)
-  }
-
-  const [s, set] = React.useState(false)
   const { attributes, children, element } = props
   switch (element.type) {
     case 'table':
-      return (
-        <div contentEditable={false} {...attributes}>
-          <ReactDataGrid
-            columns={element.columns}
-            rowGetter={(i) => element.rows[i]}
-            rowsCount={element.rows.length}
-            minHeight={150}
-            // onGridRowsUpdated={eval(element.onGridRowsUpdated)}
-            onGridRowsUpdated={onGridRowsUpdated}
-          />
-
-          {children}
-        </div>
-      )
-
+      return <Table {...props} />
     case 'mention':
       return (
         <span {...attributes} contentEditable={false}>
@@ -51,17 +33,7 @@ const Element = (props: any) => {
     case 'title':
       return <h2 {...attributes}>{children}</h2>
     case 'formula':
-      return (
-        <span onMouseEnter={() => set(true)} onMouseLeave={() => set(false)}>
-          {s && (
-            <code style={{ color: 'blue' }}>
-              {children}
-              {s && '='}
-            </code>
-          )}
-          <span>{`${parser.parse(element.children[0].text).result}`}</span>
-        </span>
-      )
+      return <Formula {...props} />
     case 'divider':
       return (
         <div contentEditable={false} {...attributes}>
